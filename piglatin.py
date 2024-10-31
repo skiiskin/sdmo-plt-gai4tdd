@@ -13,10 +13,12 @@ class PigLatin:
         translated_words = []
         for word in words:
             if word[0] in 'aeiou':
-                translated_word = word + 'nay'
+                if word[-1] == 'y':
+                    translated_word = word + 'nay'
+                else:
+                    translated_word = word + 'yay'
             else:
-                first_vowel_idx = next((i for i, letter in enumerate(word) if letter in 'aeiou'), len(word))
-                translated_word = word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+                translated_word = word
             translated_words.append(translated_word)
         return ' '.join(translated_words)
 
