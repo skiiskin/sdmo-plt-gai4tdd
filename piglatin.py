@@ -12,20 +12,29 @@ class PigLatin:
         words = self.phrase.split()
         translated_words = []
         for word in words:
-            if word[0] in 'aeiou':
-                if word[-1] == 'y':
-                    translated_word = word + 'nay'
-                elif word[-1] in 'aeiou':
-                    translated_word = word + 'yay'
-                else:
-                    translated_word = word + 'ay'
+            if '-' in word:
+                subwords = word.split('-')
+                translated_subwords = [self.translate_subword(subword) for subword in subwords]
+                translated_word = '-'.join(translated_subwords)
             else:
-                first_vowel_idx = next((i for i, char in enumerate(word) if char in 'aeiou'), None)
-                if first_vowel_idx is None:
-                    translated_word = word + 'ay'
-                elif first_vowel_idx == 0:
-                    translated_word = word + 'ay'
-                else:
-                    translated_word = word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+                translated_word = self.translate_subword(word)
             translated_words.append(translated_word)
         return ' '.join(translated_words)
+
+    def translate_subword(self, word):
+        if word[0] in 'aeiou':
+            if word[-1] == 'y':
+                return word + 'nay'
+            elif word[-1] in 'aeiou':
+                return word + 'yay'
+            else:
+                return word + 'ay'
+        else:
+            first_vowel_idx = next((i for i, char in enumerate(word) if char in 'aeiou'), None)
+            if first_vowel_idx is None:
+                return word + 'ay'
+            elif first_vowel_idx == 0:
+                return word + 'ay'
+            else:
+                return word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+
