@@ -22,19 +22,23 @@ class PigLatin:
         return ' '.join(translated_words)
 
     def translate_subword(self, word):
+        punctuation = ""
+        if word[-1] in '.,:;\'?!()':
+            punctuation = word[-1]
+            word = word[:-1]
         if word[0] in 'aeiou':
             if word[-1] == 'y':
-                return word + 'nay'
+                return word + 'nay' + punctuation
             elif word[-1] in 'aeiou':
-                return word + 'yay'
+                return word + 'yay' + punctuation
             else:
-                return word + 'ay'
+                return word + 'ay' + punctuation
         else:
             first_vowel_idx = next((i for i, char in enumerate(word) if char in 'aeiou'), None)
             if first_vowel_idx is None:
-                return word + 'ay'
+                return word + 'ay' + punctuation
             elif first_vowel_idx == 0:
-                return word + 'ay'
+                return word + 'ay' + punctuation
             else:
-                return word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+                return word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay' + punctuation
 
