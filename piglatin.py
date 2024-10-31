@@ -20,7 +20,12 @@ class PigLatin:
                 else:
                     translated_word = word + 'ay'
             else:
-                translated_word = word[1:] + word[0] + 'ay'
+                first_vowel_idx = next((i for i, char in enumerate(word) if char in 'aeiou'), None)
+                if first_vowel_idx is None:
+                    translated_word = word + 'ay'
+                elif first_vowel_idx == 0:
+                    translated_word = word + 'ay'
+                else:
+                    translated_word = word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
             translated_words.append(translated_word)
         return ' '.join(translated_words)
-
