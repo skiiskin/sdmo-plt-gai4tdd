@@ -1,3 +1,4 @@
+from error import PigLatinError
 
 class PigLatin:
     def __init__(self, phrase: str):
@@ -9,6 +10,8 @@ class PigLatin:
     def translate(self) -> str:
         if not self.phrase:
             return "nil"
+        if any(char in self.phrase for char in '#@$%^&*={}[]|\\<>'):
+            raise PigLatinError("Illegal punctuation found.")
         words = self.phrase.split()
         translated_words = []
         for word in words:
