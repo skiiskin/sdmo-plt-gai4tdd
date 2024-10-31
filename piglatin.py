@@ -29,15 +29,22 @@ class PigLatin:
         punctuation = ""
         capitalization = False
         titlecase = False
+
         if word[-1] in '.,:;\'?!()':
             punctuation = word[-1]
             word = word[:-1]
-        if word[0].isupper() and word[1].islower():
+
+        if word[0].isupper() and word[1:].islower():
             capitalization = True
             word = word.lower()
+
         if word.isupper():
             titlecase = True
             word = word.lower()
+
+        if word[0].islower() and not word[1:].islower():
+            raise PigLatinError
+
         if word[0] in 'aeiou':
             if word[-1] == 'y':
                 result = word + 'nay'
@@ -51,9 +58,12 @@ class PigLatin:
                 result = word + 'ay'
             else:
                 result = word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+
         if capitalization:
             result = result.capitalize()
+
         if titlecase:
             result = result.upper()
+
         return result + punctuation
 
