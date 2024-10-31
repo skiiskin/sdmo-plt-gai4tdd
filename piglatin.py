@@ -1,3 +1,4 @@
+
 from error import PigLatinError
 
 class PigLatin:
@@ -26,22 +27,27 @@ class PigLatin:
 
     def translate_subword(self, word):
         punctuation = ""
+        capitalization = False
         if word[-1] in '.,:;\'?!()':
             punctuation = word[-1]
             word = word[:-1]
+        if word[0].isupper():
+            capitalization = True
+            word = word.lower()
         if word[0] in 'aeiou':
             if word[-1] == 'y':
-                return word + 'nay' + punctuation
+                result = word + 'nay'
             elif word[-1] in 'aeiou':
-                return word + 'yay' + punctuation
+                result = word + 'yay'
             else:
-                return word + 'ay' + punctuation
+                result = word + 'ay'
         else:
             first_vowel_idx = next((i for i, char in enumerate(word) if char in 'aeiou'), None)
             if first_vowel_idx is None:
-                return word + 'ay' + punctuation
-            elif first_vowel_idx == 0:
-                return word + 'ay' + punctuation
+                result = word + 'ay'
             else:
-                return word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay' + punctuation
+                result = word[first_vowel_idx:] + word[:first_vowel_idx] + 'ay'
+        if capitalization:
+            result = result.capitalize()
+        return result + punctuation
 
