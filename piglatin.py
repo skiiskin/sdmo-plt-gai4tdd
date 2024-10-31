@@ -15,8 +15,10 @@ class PigLatin:
             if word[0] in 'aeiou':
                 if word[-1] == 'y':
                     translated_word = word + 'nay'
-                else:
+                elif word[-1] in 'aeiou':
                     translated_word = word + 'yay'
+                else:
+                    translated_word = word + 'ay'
             else:
                 translated_word = word
             translated_words.append(translated_word)
